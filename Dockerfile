@@ -1,11 +1,10 @@
-FROM ubuntu:14.10
+FROM ubuntu:14.04
 MAINTAINER Eric Young <eric@stratolinux.com>
 
 # To get rid of error messages like "debconf: unable to initialize frontend: Dialog":
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu utopic multiverse" >> /etc/apt/sources.list
-
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty multiverse" >> /etc/apt/sources.list
 RUN apt-get -q update
 
 RUN apt-get install -qy python-software-properties software-properties-common
@@ -18,10 +17,13 @@ RUN apt-get install -qy --force-yes sabnzbdplus
 RUN apt-get install -qy --force-yes sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush
 RUN apt-get install -qy --force-yes par2 python-yenc unzip unrar
 
+RUN apt-get -qy upgrade
+
 # apt clean
 RUN apt-get clean &&\
   rm -rf /var/lib/apt/lists/* &&\
-  rm -rf /tmp/*
+  rm -rf /tmp/* &&\
+  rm -rf /var/tmp/*
 
 VOLUME /config
 VOLUME /data
