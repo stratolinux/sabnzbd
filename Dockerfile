@@ -26,7 +26,7 @@ RUN apt-get clean &&\
   rm -rf /var/tmp/*
 
 VOLUME /config
-VOLUME /data
+VOLUME /downloads
 
 ADD ./start.sh /start.sh
 RUN chmod u+x  /start.sh
